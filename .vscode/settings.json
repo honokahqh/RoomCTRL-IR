@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "main.h": "c",
+        "xl32f003xx_ll_start_kit.h": "c",
+        "cstdint": "cpp",
+        "bsp_driver.h": "c",
+        "xl32f0xx.h": "c",
+        "xl32f003x6.h": "c",
+        "stdint.h": "c",
+        "xl32f0xx_ll_utils.h": "c",
+        "modbus_core.h": "c",
+        "xl32f0xx_ll_usart.h": "c",
+        "xl32f0xx_ll_iwdg.h": "c",
+        "flash_driver.h": "c"
+    },
+    // "C_Cpp.errorSquiggles": "disabled"
+}
