@@ -55,14 +55,14 @@ void uart2_init()
  * @date 2023-12-16
  */
 void uart_send_data(uint8_t *data, uint8_t len)
-{
+{ 
     RS485_TX_EN();
     for (uint8_t i = 0; i < len; i++)
     {
         USART2->DR = data[i];
-        while (!(USART2->SR & 0x40))
-            ;
+        while (!(USART2->SR & 0x80));
     }
+    while (!(USART2->SR & 0x40));
 	LL_mDelay(3);// 可以不等待USART2->SR & 0x40是发送完成标志位,但是第一次发送时需要等待
     RS485_RX_EN();
 }
@@ -88,7 +88,7 @@ void USART2_IRQHandler()
  * @author Honokahqh
  * @date 2023-12-16
  */
-uint32_t sys_ms, sys_100us;
+volatile uint32_t sys_ms, sys_100us;
 void timer1_init()
 {
     LL_APB1_GRP2_EnableClock(RCC_APBENR2_TIM1EN);

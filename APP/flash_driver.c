@@ -3,7 +3,6 @@
 
 static FlashStatus flash_unlock(void);
 static FlashStatus flash_lock(void);
-static FlashStatus WaitForLastOperation();
 typedef void (*AppFunction)(void);
 
 void JumpToApp()
@@ -54,7 +53,8 @@ static __RAM_FUNC void FLASH_Program_Page(uint32_t Address, uint32_t *DataAddres
             SET_BIT(FLASH->CR, FLASH_CR_PGSTRT);
         }
     }
-
+    while(FLASH->SR & FLASH_SR_BSY);
+	CLEAR_BIT(FLASH->CR, FLASH_CR_PG);
     /* Exit critical section: restore previous priority mask */
     __set_PRIMASK(primask_bit);
 }
@@ -87,7 +87,7 @@ void flash_program_bytes(uint32_t write_addr, uint8_t *data, uint32_t len)
             len = 0;
         }
     }
-
+    
     // Lock the flash after programming
     if (flash_lock() != FLASH_SUCCESS)
         return;
@@ -95,13 +95,22 @@ void flash_program_bytes(uint32_t write_addr, uint8_t *data, uint32_t len)
 
 void flash_page_erase(uint32_t erase_addr)
 {
-    if (flash_unlock() != FLASH_SUCCESS)
+	FLASH->PERTPE=0x11940;
+	FLASH->SMERTPE=0x11940;
+	FLASH->PRGTPE=0x5DC0;
+	FLASH->PRETPE=0x12C0;
+    while(FLASH->SR & FLASH_SR_BSY);
+    if(flash_unlock() != FLASH_SUCCESS)
         return;
-//    CLEAR_BIT(FLASH_FLAG_BSY | FLASH_FLAG_EOP | FLASH_FLAG_PGERR | FLASH_FLAG_WRPRTERR);
-//    SET_BIT(FLASH->CR, FLASH_CR_SER);
-//	*(__IO uint32_t *)(erase_addr) = 0xFF;
-//    WaitForLastOperation();
-//    CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
+    SET_BIT(FLASH->CR, FLASH_CR_PER);
+    SET_BIT(FLASH->CR, FLASH_CR_EOPIE);
+    *(__IO uint32_t *)(erase_addr) = 0xFF;
+    while(FLASH->SR & FLASH_SR_BSY);
+    if(READ_BIT(FLASH->SR, FLASH_SR_EOP) != 0x00U)
+    {
+        CLEAR_BIT(FLASH->SR, FLASH_SR_EOP);
+    }
+    CLEAR_BIT(FLASH->CR, FLASH_CR_PER);
 }
 
 static FlashStatus flash_unlock(void)
@@ -118,8 +127,6 @@ static FlashStatus flash_unlock(void)
             return FLASH_ERROR_UNLOCK;
         }
     }
-
-    tick_printf("%s, flash is unlocked\r\n", __func__);
     return FLASH_SUCCESS;
 }
 
@@ -135,20 +142,7 @@ static FlashStatus flash_lock(void)
 
     return FLASH_SUCCESS;
 }
-
-static FlashStatus WaitForLastOperation()
+static FlashStatus flash_check_busy()
 {
-    volatile uint32_t timeout = sys_ms + 100;
-
-    /* Wait if any operation is ongoing */
-    while (READ_BIT(FLASH->SR, FLASH_SR_BSY) != 0x00U)
-    {
-        if (sys_ms >= timeout)
-        {
-            return FLASH_TIMEOUT;
-        }
-    }
-    /* Clear SR register */
-    FLASH->SR = (1 << 0) | (1 << 4) | (1 << 15);
-    return FLASH_SUCCESS;
+    // volatile uint32_t timeout = sys_ms + 100;
 }

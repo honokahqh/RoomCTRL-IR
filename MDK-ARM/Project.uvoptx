@@ -125,7 +125,7 @@
         <SetRegEntry>
           <Number>0</Number>
           <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U% -O206 -SF1000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(0BC11477) -L00(0) -TO131090 -TC10000000 -TT10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0ARM32F003xx_32.FLM -FS08000000 -FL010000 -FP0($$Device:ARM32F003x6$Flash\ARM32F003xx_32.FLM)</Name>
+          <Name>-U160025000F000032434B514E -O206 -SF5000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(0BC11477) -L00(0) -TO131090 -TC10000000 -TT10000000 -TP21 -TDS8007 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC1000 -FN1 -FF0ARM32F003xx_32.FLM -FS08000000 -FL010000 -FP0($$Device:ARM32F003x6$Flash\ARM32F003xx_32.FLM)</Name>
         </SetRegEntry>
         <SetRegEntry>
           <Number>0</Number>
@@ -162,9 +162,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>106</LineNumber>
+          <LineNumber>121</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>134224944</Address>
+          <Address>134225042</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -173,23 +173,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>..\APP\app.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Target\../APP/app.c\106</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>35</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>134225928</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>..\Src\main.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\Target\../Src/main.c\35</Expression>
+          <Expression>\\Target\../APP/app.c\121</Expression>
         </Bp>
       </Breakpoint>
       <WatchWindow1>
@@ -222,6 +206,11 @@
           <count>5</count>
           <WinNumber>1</WinNumber>
           <ItemText>buzz_buffer</ItemText>
+        </Ww>
+        <Ww>
+          <count>6</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>sys_ms</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
@@ -274,12 +263,18 @@
       <pszMrulep></pszMrulep>
       <pSingCmdsp></pSingCmdsp>
       <pMultCmdsp></pMultCmdsp>
+      <SystemViewers>
+        <Entry>
+          <Name>System Viewer\FLASH</Name>
+          <WinId>35905</WinId>
+        </Entry>
+      </SystemViewers>
       <DebugDescription>
         <Enable>1</Enable>
         <EnableFlashSeq>0</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
-        <DbgClock>1000000</DbgClock>
+        <DbgClock>5000000</DbgClock>
       </DebugDescription>
     </TargetOption>
   </Target>

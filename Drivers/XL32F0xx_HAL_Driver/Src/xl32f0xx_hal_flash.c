@@ -318,7 +318,7 @@ HAL_StatusTypeDef HAL_FLASH_Erase(FLASH_EraseInitTypeDef *pEraseInit, uint32_t *
     
   /* Config flash timming */
   __HAL_FLASH_TIMMING_SEQUENCE_CONFIG();
-
+  FLASH->PERTPE = 0x11940;
   /* Check the parameters */
   assert_param(IS_FLASH_TYPEERASE(pEraseInit->TypeErase));
 
@@ -486,7 +486,7 @@ HAL_StatusTypeDef HAL_FLASH_Erase_IT(FLASH_EraseInitTypeDef *pEraseInit)
   */
 HAL_StatusTypeDef HAL_FLASH_PageProgram(uint32_t Address, uint32_t * DataAddr )
 {
-   return HAL_FLASH_Program(FLASH_TYPEPROGRAM_PAGE, Address, DataAddr);
+   return HAL_ERROR;
 }
 
 /**
@@ -498,7 +498,6 @@ HAL_StatusTypeDef HAL_FLASH_PageProgram(uint32_t Address, uint32_t * DataAddr )
   *
   * @retval HAL_StatusTypeDef HAL Status
   */
-1
 
 /**
   * @brief  Program of a page at a specified address with interrupt enabled.
@@ -509,7 +508,7 @@ HAL_StatusTypeDef HAL_FLASH_PageProgram(uint32_t Address, uint32_t * DataAddr )
   */
 HAL_StatusTypeDef HAL_FLASH_PageProgram_IT(uint32_t Address, uint32_t *DataAddr)
 {
-  return HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_PAGE, Address, DataAddr);
+  return HAL_ERROR;
 }
 
 /**

@@ -31,7 +31,7 @@ void uart2_init(void);
 void uart_send_data(uint8_t *data, uint8_t len);
 
 // timer1 1ms定时
-extern uint32_t sys_ms;
+extern volatile uint32_t sys_ms;
 void timer1_init(void);
 #define BUZZ_PORT GPIOA
 #define BUZZ_PIN LL_GPIO_PIN_3

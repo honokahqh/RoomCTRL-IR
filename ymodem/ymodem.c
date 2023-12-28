@@ -172,7 +172,7 @@ int ymodem_packet_analysis(uint8_t *rxbuffer, uint16_t rxlen, uint8_t *txbuffer,
             ymodem_session.error_count ++;
             
             // 数据写入
-//            flash_program_bytes(APP_ADDR + ymodem_session.packet_number * 128, &rxbuffer[3], 128);
+           flash_program_bytes(APP_ADDR + ymodem_session.packet_number * 128, &rxbuffer[3], 128);
             // 写入完毕
             ymodem_session.packet_number++;
             if (ymodem_session.packet_number >= ymodem_session.packet_total)

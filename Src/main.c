@@ -1,41 +1,30 @@
 #include "main.h"
 
 /* Private function prototypes -----------------------------------------------*/
-void SystemClock_Config(void);
+static void SystemClock_Config(void);
 
 /**
  * main
- * @brief 
+ * @brief
  * @author Honokahqh
  * @date 2023-12-16
  */
 int main(void)
 {
-//#if Is_APP
-//	__enable_irq();
-//#else 
-//	JumpToApp();
-//#endif
     /* 配置系统时钟 */
-	uint8_t flash_Data[128];
-	for(uint8_t i = 0; i < 128;i++)
-	{	
-		flash_Data[i] = i;
-	}
     SystemClock_Config();
-//    IWDG_Config();
+    IWDG_Config();
     uart2_init();
     timer1_init();
     ADC_init();
     infrared_init();
     MBS_MappingInit();
-//	flash_program_bytes(APP_ADDR, flash_Data, 128);
-//	flash_program_bytes(APP_ADDR + 128, flash_Data, 128);
-//	flash_program_bytes(APP_ADDR + 256, flash_Data, 128);
-	flash_page_erase(APP_ADDR);
-	buzz_mode_set(3);
-    uint8_t startframe[3] = {0xFF, MBS_SelfAddr, 0xFE};
+	RS485_TX_EN();
+	printf("hello world\r\n");
+	uint8_t startframe[3] = {0xFF, MBS_SelfAddr, 0xFE};
     uart_send_data(startframe, 3);
+	RS485_RX_EN();
+    buzz_mode_set(3);
     System_Run();
 }
 
@@ -45,7 +34,7 @@ int main(void)
  * @author Honokahqh
  * @date 2023-12-16
  */
-void SystemClock_Config(void)
+static void SystemClock_Config(void)
 {
     /* 使能HSI */
     LL_RCC_HSI_Enable();
@@ -93,7 +82,7 @@ unsigned int millis(void)
 void tick_printf(const char *fmt, ...)
 {
 #if DEBUG
-	RS485_TX_EN();
+    RS485_TX_EN();
     va_list args;
     va_start(args, fmt);
 
@@ -106,8 +95,8 @@ void tick_printf(const char *fmt, ...)
     // 打印剩余的信息
     vprintf(fmt, args);
     va_end(args);
-	
-	RS485_RX_EN();
+
+    RS485_RX_EN();
 #endif
 }
 

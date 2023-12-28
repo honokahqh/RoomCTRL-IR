@@ -54,7 +54,7 @@ static int Task2_uart_process(struct pt *pt)
     PT_BEGIN(pt);
     while (1)
     {
-        PT_WAIT_UNTIL(pt, uart_state.has_data);
+//        PT_WAIT_UNTIL(pt, uart_state.has_data);
         ymodem_data_process();
         if (uart_state.rx_len <= 64 && ymodem_session.state == YMODEM_STATE_IDLE)
         {
@@ -64,6 +64,7 @@ static int Task2_uart_process(struct pt *pt)
         }
         uart_state.has_data = 0;
         uart_state.rx_len = 0;
+		PT_TIMER_DELAY(pt, 80);
     }
     PT_END(pt);
 }
@@ -117,6 +118,7 @@ static int Task3_100ms_process(struct pt *pt)
         }
         mbs_has_data = 0;
         cnt_100ms++;
+        LL_mDelay(120);
         PT_TIMER_DELAY(pt, 100);
     }
     PT_END(pt);

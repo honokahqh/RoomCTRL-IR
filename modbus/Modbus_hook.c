@@ -165,11 +165,6 @@ void MBS_Function0FH(void)
 	{
 		MBS_PortSendAck(MBS_EX_NONE);
 	}
-	//	printf("res:");
-	//	for (unsigned char i = 0; i < 28; i++)
-	//	{
-	//		printf("%d-%d  ", i, mbsCoilValue[6+i].pData);
-	//	}
 }
 #endif
 
