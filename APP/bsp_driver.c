@@ -392,7 +392,7 @@ void EXTI4_15_IRQHandler()
 {
     // 清除中断
     LL_EXTI_ClearFlag(LL_EXTI_LINE_4);
-    // if (sys_100us >= 1000)
+    // if (sys_100us >= 1000) // for debug
     //     infrared_state.temp_len = 0;
     // infrared_state.temp_buf[infrared_state.temp_len++] = sys_100us;
     // sys_100us = 0;

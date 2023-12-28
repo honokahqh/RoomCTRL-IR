@@ -11,7 +11,8 @@
         "modbus_core.h": "c",
         "xl32f0xx_ll_usart.h": "c",
         "xl32f0xx_ll_iwdg.h": "c",
-        "flash_driver.h": "c"
+        "flash_driver.h": "c",
+        "app.h": "c"
     },
     // "C_Cpp.errorSquiggles": "disabled"
 }

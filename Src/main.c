@@ -17,13 +17,22 @@ int main(void)
 //	JumpToApp();
 //#endif
     /* 配置系统时钟 */
+	uint8_t flash_Data[128];
+	for(uint8_t i = 0; i < 128;i++)
+	{	
+		flash_Data[i] = i;
+	}
     SystemClock_Config();
-    IWDG_Config();
+//    IWDG_Config();
     uart2_init();
     timer1_init();
     ADC_init();
     infrared_init();
     MBS_MappingInit();
+//	flash_program_bytes(APP_ADDR, flash_Data, 128);
+//	flash_program_bytes(APP_ADDR + 128, flash_Data, 128);
+//	flash_program_bytes(APP_ADDR + 256, flash_Data, 128);
+	flash_page_erase(APP_ADDR);
 	buzz_mode_set(3);
     uint8_t startframe[3] = {0xFF, MBS_SelfAddr, 0xFE};
     uart_send_data(startframe, 3);
