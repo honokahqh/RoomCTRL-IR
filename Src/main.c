@@ -19,11 +19,9 @@ int main(void)
     ADC_init();
     infrared_init();
     MBS_MappingInit();
-	RS485_TX_EN();
-	printf("hello world\r\n");
+	LL_mDelay(500); // 等待RS485稳定
 	uint8_t startframe[3] = {0xFF, MBS_SelfAddr, 0xFE};
     uart_send_data(startframe, 3);
-	RS485_RX_EN();
     buzz_mode_set(3);
     System_Run();
 }
@@ -75,7 +73,7 @@ unsigned int millis(void)
 
 /**
  * tick_printf
- * @brief 打印时间戳或tick值，用于调试程序，正式发布时请删除此函数调用，以节省程序空间
+ * @brief 打印时间戳或tick值，用于调试程序
  * @author Honokahqh
  * @date 2023-12-16
  */

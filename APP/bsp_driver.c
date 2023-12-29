@@ -55,7 +55,7 @@ void uart2_init()
  * @date 2023-12-16
  */
 void uart_send_data(uint8_t *data, uint8_t len)
-{ 
+{ 	
     RS485_TX_EN();
     for (uint8_t i = 0; i < len; i++)
     {
@@ -63,7 +63,6 @@ void uart_send_data(uint8_t *data, uint8_t len)
         while (!(USART2->SR & 0x80));
     }
     while (!(USART2->SR & 0x40));
-	LL_mDelay(3);// 可以不等待USART2->SR & 0x40是发送完成标志位,但是第一次发送时需要等待
     RS485_RX_EN();
 }
 
@@ -337,6 +336,12 @@ volatile uint16_t temperature;
 volatile uint16_t uhADCxConvertedData = VAR_CONVERTED_DATA_INIT_VALUE;
 volatile uint16_t uhADCxConvertedData_Voltage_mVolt = 0;
 
+/**
+ * APP_AdcGrpRegularUnitaryConvCompleteCallback
+ * @brief ADC callback
+ * @author Honokahqh
+ * @date 2023-12-16
+ */
 void APP_AdcGrpRegularUnitaryConvCompleteCallback()
 {
     uint8_t i;
@@ -357,6 +362,12 @@ void APP_AdcGrpRegularUnitaryConvCompleteCallback()
     mbsHoldRegValue[MBS_REG_ADC].pData = temperature;
 }
 
+/**
+ * ADC_COMP_IRQHandler
+ * @brief ADC 中断
+ * @author Honokahqh
+ * @date 2023-12-16
+ */
 void ADC_COMP_IRQHandler(void)
 {
     /* 检测是不是转换结束触发的中断 */
@@ -370,8 +381,13 @@ void ADC_COMP_IRQHandler(void)
     }
 }
 
+/**
+ * infrared_init
+ * @brief 红外IO初始化
+ * @author Honokahqh
+ * @date 2023-12-16
+ */
 volatile IR_state_t infrared_state;
-
 void infrared_init()
 {
     // gpioA pin4 上升沿中断
@@ -388,6 +404,12 @@ void infrared_init()
     NVIC_EnableIRQ(EXTI4_15_IRQn);
 }
 
+/**
+ * EXTI4_15_IRQHandler
+ * @brief 根据IO电平切换时间计算0 or 1
+ * @author Honokahqh
+ * @date 2023-12-16
+ */
 void EXTI4_15_IRQHandler()
 {
     // 清除中断
@@ -428,6 +450,12 @@ void EXTI4_15_IRQHandler()
     }
 }
 
+/**
+ * IWDG_Config
+ * @brief 看门狗初始化
+ * @author Honokahqh
+ * @date 2023-12-16
+ */
 void IWDG_Config(void)
 {
     /* 使能LSI */
